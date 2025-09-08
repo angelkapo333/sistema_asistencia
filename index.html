@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contactos de Padres</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    .busqueda-container {
+      display: flex;
+      flex-direction: column;
+      max-width: 500px;
+      margin-bottom: 20px;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .numeros {
+      margin-bottom: 20px;
+      font-size: 16px;
+      background: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .resultado {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      font-size: 18px;
+    }
+
+    .boton {
+      display: inline-block;
+      padding: 10px 15px;
+      border-radius: 5px;
+      color: #fff;
+      text-decoration: none;
+      margin-top: 10px;
+      margin-right: 10px;
+    }
+
+    .whatsapp { background-color: #25D366; }
+    .gmail { background-color: #D44638; }
+  </style>
+</head>
+<body>
+    <h2>Buscar contacto del padre por número</h2>
+
+  <div class="busqueda-container">
+    <label for="telefonoInput">📞 Ingresá el número del padre:</label>
+    <input type="text" id="telefonoInput" placeholder="Ej: +54 9 11 2010-4719" />
+  </div>
+  
+
+  <div class="numeros">
+    <strong>Números registrados:</strong><br>
+    - Juan Pérez: +54 9 11 1111-1111<br>  padre.juan@gmail.com <br>
+    - Lucía González: +54 9 11 2010-4719<br> padre.lucia@gmail.com <br>
+    - Martín López: +54 9 11 3333-3333       <br> padre.martin@gmail.com <br>
+  </div> 
+
+  <div id="resultado" class="resultado"></div>
+
+  <script>
+    const contactos = {
+      "+54 9 11 2010-4719": {
+        alumno: "Padre de Lucía González",
+        whatsapp: "5491120104719",
+        email: "padre.lucia@gmail.com"
+      },
+      "+54 9 11 1111-1111": {
+        alumno: "Padre de Juan Perez",
+        whatsapp: "5491111111111",
+        email: "padre.juan@gmail.com"
+      },
+      "+54 9 11 3333-3333": {
+        alumno: "Padre de Martín López",
+        whatsapp: "5491133333333",
+        email: "padre.martin@gmail.com"
+      }
+    };
+
+    const input = document.getElementById("telefonoInput");
+    const resultados = document.getElementById("resultado");
+
+    input.addEventListener("input", () => {
+      const valor = input.value.trim();
+      const datos = contactos[valor];
+
+      if (datos) {
+        resultado.innerHTML = `
+          Padre: <strong>${datos.alumno}</strong><br><br>
+          <a class="boton whatsapp" href="https://wa.me/${datos.whatsapp}?text=Hola,%20le%20escribimos%20por%20su%20hijo/a%20${encodeURIComponent(datos.alumno)}" target="_blank">📱 WhatsApp</a>
+          <a class="boton gmail" href="https://mail.google.com/mail/?view=cm&fs=1&to=${datos.email}&su=Reporte%20de%20faltas&body=Hola,%20le%20informamos%20que%20su%20hijo/a%20${encodeURIComponent(datos.alumno)}%20tiene%20faltas%20registradas." target="_blank">📧 Gmail</a>
+        `;
+      } else {
+        resultado.innerHTML = "❌ Número no encontrado en la base de datos.";
+      }
+    });
+  </script>
+
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sistema de Asistencia Escolar</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+    h1, h2 {
+      color: #333;
+    }
+    .alerta {
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeeba;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: center;
+    }
+    th {
+      background: #2c3e50;
+      color: white;
+    }
+    .falta {
+      background-color: #ffdddd;
+      color: red;
+      font-weight: bold;
+    }
+    .presente {
+      background-color: #ddffdd;
+      color: green;
+      font-weight: bold;
+    }
+    .filtros {
+      margin-bottom: 20px;
+    }
+    .filtros input, .filtros select {
+      padding: 8px;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+    .faltas-info {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+  </style>
+</head>
+
+<script>
+const buscadorTelefono = document.getElementById("buscadorTelefono");
+  const resultadoBusquedaTelefono = document.getElementById("resultadoBusquedaTelefono");
+
+  const datosPorTelefono = {
+    "+54 9 11 1111-1111": {
+      alumno: "Juan Pérez",
+      whatsapp: "541111111111",
+      email: "padre.juan@gmail.com"
+    },
+    "+54 9 11 2010-4719": {
+      alumno: "Lucía González",
+      whatsapp: "541120104719",
+      email: "padre.lucia@gmail.com"
+    },
+    "+54 9 11 3333-3333": {
+      alumno: "Martín López",
+      whatsapp: "541133333333",
+      email: "padre.martin@gmail.com"
+    }
+  };
+
+  buscadorTelefono.addEventListener("input", () => {
+    const numero = buscadorTelefono.value.trim();
+    if (datosPorTelefono[numero]) {
+      const datos = datosPorTelefono[numero];
+      resultadoBusquedaTelefono.innerHTML = `
+        👤 Alumno relacionado: <strong>${datos.alumno}</strong><br><br>
+        <a href="https://wa.me/${datos.whatsapp}?text=Hola%2C%20le%20escribimos%20por%20su%20hijo/a%20${encodeURIComponent(datos.alumno)}%20desde%20el%20sistema%20de%20asistencia." 
+           target="_blank" 
+           style="display:inline-block; margin-right:10px; padding:10px 15px; background-color:#25D366; color:white; text-decoration:none; border-radius:5px;">
+           📱 WhatsApp
+        </a>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=${datos.email}&su=Reporte%20de%20asistencia%20de%20${encodeURIComponent(datos.alumno)}&body=Estimado/a%2C%20le%20escribimos%20respecto%20a%20${encodeURIComponent(datos.alumno)}.%20Saludos." 
+           target="_blank"
+           style="display:inline-block; padding:10px 15px; background-color:#D44638; color:white; text-decoration:none; border-radius:5px;">
+           📧 Gmail
+        </a>
+      `;
+    } else {
+      resultadoBusquedaTelefono.innerHTML = "";
+    }
+  });
+
+
+
+  
+
+  selectorPadres.addEventListener("change", () => {
+    const nombreSeleccionado = selectorPadres.value;
+    if (datosPadres[nombreSeleccionado]) {
+      const datos = datosPadres[nombreSeleccionado];
+      contactoResultado.innerHTML = `
+
+    
+        📞 Teléfono: <strong>${datos.telefono}</strong><br><br>
+        <a href="https://wa.me/${datos.whatsapp}?text=Hola%2C%20su%20hijo%2Fa%20${nombreSeleccionado.replace(/^\w/, c => c.toUpperCase())}%20tiene%20información%20importante%20en%20el%20sistema%20de%20asistencia." 
+           target="_blank" 
+           style="display:inline-block; margin-right:10px; padding:10px 15px; background-color:#25D366; color:white; text-decoration:none; border-radius:5px;">
+           📱 WhatsApp
+        </a>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=${datos.email}&su=Contacto%20desde%20sistema%20de%20asistencia&body=Estimado%2Fa%2C%20le%20escribimos%20por%20${nombreSeleccionado.replace(/^\w/, c => c.toUpperCase())}.%20Saludos." 
+           target="_blank"
+           style="display:inline-block; padding:10px 15px; background-color:#D44638; color:white; text-decoration:none; border-radius:5px;">
+           📧 Gmail
+        </a>
+      `;
+    } else {
+      contactoResultado.innerHTML = "";
+    }
+  });
+</script>
+
+
+<body>
+
+  <h1>Sistema de Asistencia Escolar</h1>
+
+  <div class="alerta">
+    <strong>Alerta:</strong> El alumno <strong>Juan Pérez</strong> faltó hoy (10/06/2025).
+  </div>
+
+  <div id="alertaLucia" class="alerta" style="display: none;"></div>
+
+  <div class="filtros">
+    <div id="contactoPadres" class="faltas-info"></div>
+    <input type="text" id="buscador" placeholder="Buscar alumno...">
+    <select id="filtroEstado">
+        <div class="filtros">
+  
+</div>
+
+
+
+
+  <div class="filtros">
+    <option value=""></option>
+
+  </select>
+</div>
+
+<div id="contactoResultado" class="faltas-info"></div>
+  <div id="faltasResultado" class="faltas-info"></div>
+
+  <h2>Asistencia del día</h2>
+  <table id="tablaAsistencia">
+    <thead>
+      <tr>
+        <th>Alumno</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Juan Pérez</td><td>10/06/2025</td><td class="falta">Falta</td></tr>
+      <tr><td>Lucía González</td><td>10/06/2025</td><td class="presente">Presente</td></tr>
+      <tr><td>Martín López</td><td>10/06/2025</td><td class="presente">Presente</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Reporte semanal</h2>
+  <table id="reporteSemanal">
+    <thead>
+      <tr><th>Alumno</th><th>Lunes</th><th>Martes</th><th>Miércoles</th><th>Jueves</th><th>Viernes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Juan Pérez</td><td>Presente</td><td>Presente</td><td>Presente</td><td>Presente</td><td>Falta</td></tr>
+      <tr><td>Lucía González</td><td>falta</td><td>Falta</td><td>Falta</td><td>Falta</td><td>Falta</td></tr>
+      <tr><td>Martín López</td><td>Presente</td><td>Presente</td><td>Presente</td><td>Presente</td><td>Presente</td></tr>
+    </tbody>
+  </table>
+
+ <script>
+
+ 
+    const buscador = document.getElementById("buscador");
+    const filtroEstado = document.getElementById("filtroEstado");
+    const tablaAsistencia = document.getElementById("tablaAsistencia").getElementsByTagName("tbody")[0];
+    const reporteSemanal = document.getElementById("reporteSemanal").getElementsByTagName("tbody")[0];
+    const resultado = document.getElementById("faltasResultado");
+    const alertaLucia = document.getElementById("alertaLucia");
+
+    function normalizar(texto) {
+      return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+    }
+
+    function colorearReporte() {
+      for (let fila of reporteSemanal.rows) {
+        for (let i = 1; i < fila.cells.length; i++) {
+          const valor = fila.cells[i].textContent.toLowerCase();
+          if (valor === "falta") {
+            fila.cells[i].classList.add("falta");
+          } else if (valor === "presente") {
+            fila.cells[i].classList.add("presente");
+          }
+        }
+      }
+    }
+
+    function contarFaltas(nombreBuscado) {
+      for (let fila of reporteSemanal.rows) {
+        const nombre = normalizar(fila.cells[0].textContent);
+        if (nombre.includes(nombreBuscado)) {
+          let faltas = 0;
+          for (let i = 1; i < fila.cells.length; i++) {
+            if (fila.cells[i].textContent.toLowerCase() === "falta") {
+              faltas++;
+            }
+          }
+          return faltas;
+        }
+      }
+      return null;
+    }
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menú Preceptor</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f7fa;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #2c3e50;
+      color: white;
+      padding: 10px 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .navbar .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    .navbar .usuario {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .usuario-icono {
+      width: 30px;
+      height: 30px;
+      background-color: white;
+      color: #2c3e50;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .menu-container {
+      max-width: 600px;
+      margin: 60px auto;
+      text-align: center;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .menu-container h2 {
+      margin-bottom: 20px;
+      color: #34495e;
+    }
+
+    .menu-btn {
+      display: block;
+      width: 80%;
+      margin: 15px auto;
+      padding: 15px;
+      font-size: 18px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .menu-btn:hover {
+      background-color: #2980b9;
+      transform: scale(1.03);
+    }
+
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      color: #aaa;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="logo">Sistema de Asistencia</div>
+    <div class="usuario">
+      <div class="usuario-icono">👤</div>
+      <div>Bienvenido, <strong>Ezequiel</strong></div> <!-- Reemplazar por el nombre real del preceptor -->
+    </div>
+  </div>
+
+  <div class="menu-container">
+    <h2>Menú Principal</h2>
+    <button class="menu-btn" onclick="window.location.href='preceptor.html'">✉ Pasar asistencia del día</button>
+    <button class="menu-btn" onclick="window.location.href='reporte.html'">📅 Ver reporte semanal</button>
+    <button class="menu-btn" onclick="window.location.href='index.html'">📲 Contacto con padres</button>
+  </div>
+
+  <div class="footer">
+    &copy; 2025 - Sistema de Asistencia Escolar
+  </div>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Asistencia</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #e3f2fd, #ffffff);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 1s ease;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 95%;
+      max-width: 800px;
+      animation: slideDown 1s ease;
+    }
+
+    .header {
+      font-size: 24px;
+      font-weight: bold;
+      color: #0d47a1;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      animation: fadeIn 0.8s ease;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #1976d2;
+      color: white;
+    }
+
+    select {
+      padding: 6px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .btn-eliminar {
+      background-color: #e53935;
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-eliminar:hover {
+      background-color: #c62828;
+    }
+
+    .btn-exportar {
+      background-color: #43a047;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-right: 10px;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .btn-exportar:hover {
+      transform: scale(1.05);
+      background-color: #2e7d32;
+    }
+
+    .input-alumno {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #bbb;
+      width: 60%;
+      margin-right: 10px;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .input-alumno:focus {
+      outline: none;
+      box-shadow: 0 0 5px #64b5f6;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0 }
+      to { opacity: 1 }
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @media screen and (max-width: 600px) {
+      .input-alumno {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .btn-exportar {
+        width: 100%;
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">📋 Lista de los presentes</div>
+    <table id="tablaAsistencia">
+      <thead>
+        <tr>
+          <th>Alumno</th>
+          <th>Presente/Ausente</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ariel Acerbi</td>
+          <td><select><option>Presente</option><option>Tarde</option><option>Ausente</option></select></td>
+          <td><button class="btn-eliminar" onclick="eliminarFila(this)">❌</button></td>
+        </tr>
+        <tr>
+          <td>Leonel Cano</td>
+          <td><select><option>Presente</option><option>Tarde</option><option>Ausente</option></select></td>
+          <td><button class="btn-eliminar" onclick="eliminarFila(this)">❌</button></td>
+        </tr>
+        <tr>
+          <td>Lucas Junco</td>
+          <td><select><option>Tarde</option><option>Presente</option><option>Ausente</option></select></td>
+          <td><button class="btn-eliminar" onclick="eliminarFila(this)">❌</button></td>
+        </tr>
+        <tr>
+          <td>Nancy Orellana</td>
+          <td><select><option>Presente</option><option>Tarde</option><option>Ausente</option></select></td>
+          <td><button class="btn-eliminar" onclick="eliminarFila(this)">❌</button></td>
+        </tr>
+        <tr>
+          <td>Ezequiel Martinez</td>
+          <td><select><option>Presente</option><option>Tarde</option><option>Ausente</option></select></td>
+          <td><button class="btn-eliminar" onclick="eliminarFila(this)">❌</button></td>
+        </tr>
+        <tr>
+          <td>Ezequiel Quispe</td>
+          <td><select><option>Ausente</option><option>Presente</option><option>Tarde</option></select></td>
+          <td><button class="btn-eliminar" onclick="eliminarFila(this)">❌</button></td>
+        </tr>
+        <tr>
+          <td>Angel Alcon</td>
+          <td><select><option>Tarde</option><option>Presente</option><option>Ausente</option></select></td>
+          <td><button class="btn-eliminar" onclick="eliminarFila(this)">❌</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div>
+      <input type="text" id="nuevoAlumno" class="input-alumno" placeholder="Nombre del alumno">
+      <button class="btn-exportar" onclick="añadirAlumno()">Añadir alumno</button>
+    </div>
+
+    <button class="btn-exportar" onclick="exportar()">Exportar a Excel</button>
+  </div>
+
+  <script>
+    function eliminarFila(boton) {
+      let fila = boton.parentElement.parentElement;
+      fila.remove();
+    }
+
+    function añadirAlumno() {
+      const nombre = document.getElementById("nuevoAlumno").value.trim();
+      if (!nombre) {
+        alert("Por favor escribí un nombre.");
+        return;
+      }
+
+      const tabla = document.getElementById("tablaAsistencia").querySelector("tbody");
+      const fila = document.createElement("tr");
+      fila.innerHTML = `
+        <td>${nombre}</td>
+        <td>
+          <select>
+            <option>Presente</option>
+            <option>Tarde</option>
+            <option>Ausente</option>
+          </select>
+        </td>
+        <td>
+          <button class="btn-eliminar" onclick="eliminarFila(this)">❌</button>
+        </td>
+      `;
+      tabla.appendChild(fila);
+      document.getElementById("nuevoAlumno").value = "";
+    }
+
+    function exportar() {
+      let tabla = document.getElementById("tablaAsistencia");
+      let csv = "";
+
+      for (let row of tabla.rows) {
+        let celdas = Array.from(row.cells).map(cell => {
+          if (cell.querySelector("select")) {
+            return cell.querySelector("select").value;
+          }
+          return cell.innerText.trim();
+        }).slice(0, 2);
+        csv += celdas.join(",") + "\r\n";
+      }
+
+      let csvConBOM = "\uFEFF" + csv;
+      let blob = new Blob([csvConBOM], { type: "text/csv;charset=utf-8;" });
+      let url = URL.createObjectURL(blob);
+      let a = document.createElement("a");
+      a.href = url;
+      a.download = "asistencia.csv";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
+
+import qrcode
+
+page_url = "https://angelkapo333.github.io/sistema_asistencia/"
+
+qr = qrcode.QRCode(
+    version=1,
+    error_correction=qrcode.constants.ERROR_CORRECT_L,
+    box_size=10,
+    border=4
+)
+
+qr.add_data(page_url)
+qr.make(fit=True)
+
+img = qr.make_image(fill_color="black", back_color="white")
+img.save("qr_code_page.png")
+
+print("QR listo")
