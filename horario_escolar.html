@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Horario Escolar</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    .hora-tarde {
+      font-size: 2em;
+      color: #e74c3c;
+      margin-bottom: 30px;
+      font-weight: bold;
+    }
+
+    table {
+      width: 80%;
+      margin: 0 auto;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 12px 20px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+      font-size: 1.1em;
+    }
+
+    th {
+      background-color: #3498db;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f2f2f2;
+    }
+
+    .volver-menu {
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .volver-menu:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <h1>Horario Escolar</h1>
+
+  <div class="hora-tarde">Horario de entrada tarde: 13:30</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Alumno</th>
+        <th>Horario de llegada temprano</th>
+        <th>Horario de llegada tarde</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Ariel Acerbi</td><td>13:30</td><td>14:40</td></tr>
+      <tr><td>Cano Choque</td><td>13:20</td><td>13:31</td></tr>
+      <tr><td>Ezequiel Martinez</td><td>13:29</td><td>14:01</td></tr>
+      <tr><td>Ezequiel Quispe</td><td>13:25</td><td>13:33</td></tr>
+      <tr><td>Nancy Orellana</td><td>13:28</td><td>14:20</td></tr>
+      <tr><td>Angel Alcon</td><td>13:22</td><td>13:35</td></tr>
+      <tr><td>Lucas Junco</td><td>13:27</td><td>14:10</td></tr>
+    </tbody>
+  </table>
+
+  <button class="volver-menu" onclick="window.location.href='menu_preceptor.html'">
+    🔙 Volver al menú
+  </button>
+</body>
+</html>
