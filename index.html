@@ -122,6 +122,258 @@
   <div class="footer">
     &copy; 2025 - Sistema de Asistencia Escolar
   </div>
+</body>
+</html>
 
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Asistencia</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #e3f2fd, #ffffff);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 1s ease;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 95%;
+      max-width: 800px;
+      animation: slideDown 1s ease;
+    }
+
+    .header {
+      font-size: 24px;
+      font-weight: bold;
+      color: #0d47a1;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      animation: fadeIn 0.8s ease;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #1976d2;
+      color: white;
+    }
+
+    select {
+      padding: 6px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .btn-eliminar {
+      background-color: #e53935;
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-eliminar:hover {
+      background-color: #c62828;
+    }
+
+    .btn-exportar {
+      background-color: #43a047;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-right: 10px;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .btn-exportar:hover {
+      transform: scale(1.05);
+      background-color: #2e7d32;
+    }
+
+    .input-alumno {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #bbb;
+      width: 60%;
+      margin-right: 10px;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .input-alumno:focus {
+      outline: none;
+      box-shadow: 0 0 5px #64b5f6;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0 }
+      to { opacity: 1 }
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @media screen and (max-width: 600px) {
+      .input-alumno {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .btn-exportar {
+        width: 100%;
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">📋 Lista de los presentes</div>
+    <table id="tablaAsistencia">
+      <thead>
+        <tr>
+          <th>Alumno</th>
+          <th>Presente/Ausente</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ariel Acerbi</td>
+          <td><select><option>Presente</option><option>Tarde</option><option>Ausente</option></select></td>
+          <td><button class="btn-eliminar" onclick="eliminarFila(this)">❌</button></td>
+        </tr>
+        <tr>
+          <td>Leonel Cano</td>
+          <td><select><option>Presente</option><option>Tarde</option><option>Ausente</option></select></td>
+          <td><button class="btn-eliminar" onclick="eliminarFila(this)">❌</button></td>
+        </tr>
+        <tr>
+          <td>Lucas Junco</td>
+          <td><select><option>Tarde</option><option>Presente</option><option>Ausente</option></select></td>
+          <td><button class="btn-eliminar" onclick="eliminarFila(this)">❌</button></td>
+        </tr>
+        <tr>
+          <td>Nancy Orellana</td>
+          <td><select><option>Presente</option><option>Tarde</option><option>Ausente</option></select></td>
+          <td><button class="btn-eliminar" onclick="eliminarFila(this)">❌</button></td>
+        </tr>
+        <tr>
+          <td>Ezequiel Martinez</td>
+          <td><select><option>Presente</option><option>Tarde</option><option>Ausente</option></select></td>
+          <td><button class="btn-eliminar" onclick="eliminarFila(this)">❌</button></td>
+        </tr>
+        <tr>
+          <td>Ezequiel Quispe</td>
+          <td><select><option>Ausente</option><option>Presente</option><option>Tarde</option></select></td>
+          <td><button class="btn-eliminar" onclick="eliminarFila(this)">❌</button></td>
+        </tr>
+        <tr>
+          <td>Angel Alcon</td>
+          <td><select><option>Tarde</option><option>Presente</option><option>Ausente</option></select></td>
+          <td><button class="btn-eliminar" onclick="eliminarFila(this)">❌</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div>
+      <input type="text" id="nuevoAlumno" class="input-alumno" placeholder="Nombre del alumno">
+      <button class="btn-exportar" onclick="añadirAlumno()">Añadir alumno</button>
+    </div>
+
+    <button class="btn-exportar" onclick="exportar()">Exportar a Excel</button>
+  </div>
+
+  <script>
+    function eliminarFila(boton) {
+      let fila = boton.parentElement.parentElement;
+      fila.remove();
+    }
+
+    function añadirAlumno() {
+      const nombre = document.getElementById("nuevoAlumno").value.trim();
+      if (!nombre) {
+        alert("Por favor escribí un nombre.");
+        return;
+      }
+
+      const tabla = document.getElementById("tablaAsistencia").querySelector("tbody");
+      const fila = document.createElement("tr");
+      fila.innerHTML = `
+        <td>${nombre}</td>
+        <td>
+          <select>
+            <option>Presente</option>
+            <option>Tarde</option>
+            <option>Ausente</option>
+          </select>
+        </td>
+        <td>
+          <button class="btn-eliminar" onclick="eliminarFila(this)">❌</button>
+        </td>
+      `;
+      tabla.appendChild(fila);
+      document.getElementById("nuevoAlumno").value = "";
+    }
+
+    function exportar() {
+      let tabla = document.getElementById("tablaAsistencia");
+      let csv = "";
+
+      for (let row of tabla.rows) {
+        let celdas = Array.from(row.cells).map(cell => {
+          if (cell.querySelector("select")) {
+            return cell.querySelector("select").value;
+          }
+          return cell.innerText.trim();
+        }).slice(0, 2);
+        csv += celdas.join(",") + "\r\n";
+      }
+
+      let csvConBOM = "\uFEFF" + csv;
+      let blob = new Blob([csvConBOM], { type: "text/csv;charset=utf-8;" });
+      let url = URL.createObjectURL(blob);
+      let a = document.createElement("a");
+      a.href = url;
+      a.download = "asistencia.csv";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
 </body>
 </html>
