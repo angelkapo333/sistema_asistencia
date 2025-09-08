@@ -44,6 +44,15 @@
             color: red;
             margin-top: 10px;
         }
+        .forgot-password {
+            margin-top: 15px;
+            color: #007bff;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .forgot-password:hover {
+            color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -51,30 +60,43 @@
         <h2>Login Preceptor</h2>
         <input type="email" id="email" placeholder="Correo">
         <input type="password" id="password" placeholder="Contraseña">
-        <button onclick="login()">Iniciar Sesión</button>
+        <button type="button" onclick="login()">Iniciar Sesión</button>
         <div class="error" id="error"></div>
+        <div class="forgot-password" onclick="forgotPassword()">Me olvidé la contraseña</div>
     </div>
 
-   <script>
-function login() {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const errorDiv = document.getElementById('error');
+    <script>
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('error');
 
-    const correctEmail = "juanma@gmail.com";// Redirige al menú
-}
-    const correctPassword = "1234";
+            const correctEmail = "juanma@gmail.com";
+            const correctPassword = "1234";
 
-    // Aquí va la verificación
-    if(email === correctEmail && password === correctPassword) {
-        // Redirige al menú del preceptor
-        window.location.href = "menu_preceptor.html";
-    } else {
-        errorDiv.style.color = "red";
-        errorDiv.textContent = "Correo o contraseña incorrectos";
-    }
-}
-</script>
+            if(email === correctEmail && password === correctPassword) {
+                // Redirige al menú del preceptor
+                window.location.href = "menu_preceptor.html";
+            } else {
+                errorDiv.style.color = "red";
+                errorDiv.textContent = "Correo o contraseña incorrectos";
+            }
+        }
+
+        function forgotPassword() {
+            const email = document.getElementById('email').value;
+            const correctEmail = "juanma@gmail.com";
+            const correctPassword = "1234";
+            const errorDiv = document.getElementById('error');
+
+            if(email === correctEmail) {
+                errorDiv.style.color = "blue";
+                errorDiv.textContent = `Tu contraseña es: ${correctPassword}`;
+            } else {
+                errorDiv.style.color = "red";
+                errorDiv.textContent = "Ingresa tu correo correcto para recuperar la contraseña";
+            }
+        }
+    </script>
 </body>
 </html>
-
