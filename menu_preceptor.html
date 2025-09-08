@@ -6,106 +6,71 @@
   <title>Menú Preceptor</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f8fc;
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f5f7fa;
+      padding: 0;
+      text-align: center;
     }
 
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    header {
       background-color: #2c3e50;
       color: white;
-      padding: 10px 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-
-    .navbar .logo {
-      font-size: 1.5em;
+      padding: 15px;
+      text-align: left;
+      font-size: 1.3em;
       font-weight: bold;
     }
 
-    .navbar .usuario {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .usuario-icono {
-      width: 30px;
-      height: 30px;
-      background-color: white;
-      color: #2c3e50;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-weight: bold;
-    }
-
-    .menu-container {
-      max-width: 600px;
-      margin: 60px auto;
-      text-align: center;
+    .menu {
+      margin-top: 50px;
       background: white;
+      display: inline-block;
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
-    .menu-container h2 {
-      margin-bottom: 20px;
-      color: #34495e;
+    h2 {
+      margin-bottom: 30px;
+      color: #2c3e50;
     }
 
-    .menu-btn {
+    button {
       display: block;
-      width: 80%;
+      width: 250px;
+      padding: 12px;
       margin: 15px auto;
-      padding: 15px;
-      font-size: 18px;
-      background-color: #3498db;
-      color: white;
       border: none;
       border-radius: 8px;
+      background-color: #3498db;
+      color: white;
+      font-size: 1.1em;
       cursor: pointer;
-      transition: background-color 0.3s, transform 0.2s;
+      transition: 0.3s;
     }
 
-    .menu-btn:hover {
+    button:hover {
       background-color: #2980b9;
-      transform: scale(1.03);
     }
 
-    .footer {
-      margin-top: 40px;
-      text-align: center;
-      color: #aaa;
-      font-size: 14px;
+    footer {
+      margin-top: 60px;
+      font-size: 0.9em;
+      color: #888;
     }
   </style>
 </head>
 <body>
+  <header>Sistema de Asistencia</header>
 
-  <div class="navbar">
-    <div class="logo">Sistema de Asistencia</div>
-    <div class="usuario">
-      <div class="usuario-icono">👤</div>
-      <div>Bienvenido, <strong>Ezequiel</strong></div> <!-- Reemplazar por el nombre real del preceptor -->
-    </div>
-  </div>
-
-  <div class="menu-container">
+  <div class="menu">
     <h2>Menú Principal</h2>
-    <button class="menu-btn" onclick="window.location.href='preceptor.html'">✉ Pasar asistencia del día</button>
-    <button onclick="window.location.href='horario_escolar.html'"> 📅 Horario que llegaron</button>
-     <button onclick="window.location.href='reporte_semanal.html'">Ver reporte semanal</button>
+    <button onclick="window.location.href='asistencia_dia.html'">📩 Pasar asistencia del día</button>
+    <button onclick="window.location.href='horario_escolar.html'">📅 Horario que llegaron</button>
+    <button onclick="window.location.href='reporte_semanal.html'">📊 Ver reporte semanal</button>
   </div>
 
-  <div class="footer">
-    &copy; 2025 - Sistema de Asistencia Escolar
-  </div>
-
+  <footer>© 2025 - Sistema de Asistencia Escolar</footer>
 </body>
 </html>
