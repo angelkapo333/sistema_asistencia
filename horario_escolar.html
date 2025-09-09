@@ -50,6 +50,24 @@
       background-color: #f2f2f2;
     }
 
+    .llegada-temprano {
+      background-color: #d4edda; /* verde claro */
+      color: #155724; /* verde oscuro */
+      font-weight: bold;
+    }
+
+    .llegada-tarde {
+      background-color: #f8d7da; /* rojo claro */
+      color: #721c24; /* rojo oscuro */
+      font-weight: bold;
+    }
+
+    .resaltado {
+      background-color: #fff3cd;
+      font-weight: bold;
+      transition: background-color 1s;
+    }
+
     .volver-menu {
       margin-top: 30px;
       padding: 10px 20px;
@@ -71,7 +89,7 @@
 
   <div class="hora-tarde">Horario de entrada tarde: 13:30</div>
 
-  <table>
+  <table id="tablaHorario">
     <thead>
       <tr>
         <th>Alumno</th>
@@ -80,18 +98,70 @@
       </tr>
     </thead>
     <tbody>
-      <tr><td>Ariel Acerbi</td><td>13:30</td><td>14:40</td></tr>
-      <tr><td>Cano Choque</td><td>13:20</td><td>13:31</td></tr>
-      <tr><td>Ezequiel Martinez</td><td>13:29</td><td>14:01</td></tr>
-      <tr><td>Ezequiel Quispe</td><td>13:25</td><td>13:33</td></tr>
-      <tr><td>Nancy Orellana</td><td>13:28</td><td>14:20</td></tr>
-      <tr><td>Angel Alcon</td><td>13:22</td><td>13:35</td></tr>
-      <tr><td>Lucas Junco</td><td>13:27</td><td>14:10</td></tr>
+      <tr>
+        <td>Ariel Acerbi</td>
+        <td class="llegada-temprano">13:30</td>
+        <td class="llegada-tarde">14:40 (Horacio Espinosa)</td>
+      </tr>
+      <tr>
+        <td>Cano Choque</td>
+        <td class="llegada-temprano">13:20</td>
+        <td class="llegada-tarde">13:31 (Patricio Fernández)</td>
+      </tr>
+      <tr>
+        <td>Ezequiel Martinez</td>
+        <td class="llegada-temprano">13:29</td>
+        <td class="llegada-tarde">14:01 (Mariana López)</td>
+      </tr>
+      <tr>
+        <td>Ezequiel Quispe</td>
+        <td class="llegada-temprano">13:25</td>
+        <td class="llegada-tarde">13:33 (Julián Ramírez)</td>
+      </tr>
+      <tr>
+        <td>Nancy Orellana</td>
+        <td class="llegada-temprano">13:28</td>
+        <td class="llegada-tarde">14:20 (Valentina Torres)</td>
+      </tr>
+      <tr>
+        <td>Angel Alcon</td>
+        <td class="llegada-temprano">13:22</td>
+        <td class="llegada-tarde">13:35 (Diego Molina)</td>
+      </tr>
+      <tr>
+        <td>Lucas Junco</td>
+        <td class="llegada-temprano">13:27</td>
+        <td class="llegada-tarde">14:10 (Camila Herrera)</td>
+      </tr>
     </tbody>
   </table>
 
   <button class="volver-menu" onclick="window.location.href='menu_preceptor.html'">
     🔙 Volver al menú
   </button>
+
+  <script>
+    // Agregar Angel Ortega automáticamente después de 14 segundos
+    setTimeout(() => {
+      const tabla = document.getElementById("tablaHorario").getElementsByTagName("tbody")[0];
+      const nuevaFila = tabla.insertRow();
+      nuevaFila.classList.add("resaltado");
+
+      const celda1 = nuevaFila.insertCell(0);
+      const celda2 = nuevaFila.insertCell(1);
+      const celda3 = nuevaFila.insertCell(2);
+
+      celda1.textContent = "Angel Ortega";
+      celda2.textContent = "13:30";
+      celda2.classList.add("llegada-temprano");
+      celda3.textContent = ""; // Llegada tarde vacía
+
+      // Quitar el resaltado después de 3 segundos
+      setTimeout(() => {
+        nuevaFila.classList.remove("resaltado");
+      }, 3000);
+    }, 14000);
+  </script>
 </body>
 </html>
+
